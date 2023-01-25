@@ -1,27 +1,75 @@
 // TODO: Declare any global variables we need
+let amountHeads = 0
+let amountTails = 0
+let totalTries = 0 
+let percentHeads = 0
+let percentTails = 0
 
+//function flipFunction()
 
 document.addEventListener('DOMContentLoaded', function () {
     // This is just a sanity check to make sure your JavaScript script is getting loaded
     // You can remove it once you see it in your browser console in the developer tools
-    console.log('Hi')
 
     // TODO: Add event listener and handler for flip and clear buttons
+    let flip = document.querySelector("#flip") 
+    let clear = document.querySelector('#clear')
+    let penny = document.querySelector('#penny-image')
+    let message = document.querySelector('#message')
 
-    // Flip Button Click Handler
-        // TODO: Determine flip outcome
-        // TODO: Update image and status message in the DOM
+    flip.addEventListener('click', function()
+    {
+            let coinFlipped = Math.round(Math.random())
+            if (coinFlipped >= .5)//changes things to heads for above .5
+            {
+                penny.src="assets/images/penny-heads.jpg"
+                amountHeads++// adds to heads amount and total tries
+                totalTries++
+                percentHeads=(Math.round(amountHeads/totalTries * 100))
+                if(amountTails>0){
+                    percentTails=(Math.round(amountTails/totalTries * 100))
+                }
 
-        // Update the scorboard
-        // TODO: Calculate the total number of rolls/flips
-        // Make variables to track the percentages of heads and tails
-        // TODO: Use the calculated total to calculate the percentages
-        // HINT: Make sure not to divide by 0! (if total is 0, percent will be 0 as well)
-        // TODO: Update the display of each table cell
+                document.querySelector('#message').innerHTML ='you Flipped Heads!'
+                document.querySelector('#heads').innerHTML = amountHeads
+                document.querySelector('#heads-percent').innerHTML = `${percentHeads}%`
+                document.querySelector('#tails-percent').innerHTML = `${percentTails}%`
+            }
+            else if(coinFlipped < .5)//changes things to tails 
+            {
+                penny.src="assets/images/penny-tails.jpg"
+                amountTails++
+                totalTries++
+                percentTails=(Math.round(amountTails/totalTries * 100))
+                if(amountHeads>0){
+                percentHeads=(Math.round(amountHeads/totalTries * 100))
+                }
+                document.querySelector('#message').innerHTML ='you Flipped Tails!'
+                document.querySelector('#tails').innerHTML = amountTails
+                document.querySelector('#heads-percent').innerHTML = `${percentHeads}%`
+                document.querySelector('#tails-percent').innerHTML = `${percentTails}%`
+                
+            }
+            else//just in case it didnt work
+            {
+                console.log("math aint mathing")
+            }
+    })
+    
 
+    clear.addEventListener("click", function(){
+         amountHeads = 0
+        amountTails = 0
+        totalTries = 0 
+        percentHeads = 0
+        percentTails = 0
+        penny.src="assets/images/penny-heads.jpg"
+        document.querySelector('#message').innerHTML ="Let's get flipping!"
+        document.querySelector('#tails').innerHTML = amountTails               
+        document.querySelector('#heads').innerHTML = amountHeads
+        document.querySelector('#heads-percent').innerHTML = `${percentHeads}%`
+        document.querySelector('#tails-percent').innerHTML = `${percentTails}%`
 
-    // Clear Button Click Handler
-        // TODO: Reset global variables to 0
-        // TODO: Update the scoreboard (same logic as in flip button click handler)
-
+    }
+    )
 })
